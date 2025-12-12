@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Resep | Kuliner Nusantara</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Poppins', sans-serif; margin: 0; padding: 20px; background-color: #f8f8f8; }
+        .container-detail { max-width: 800px; margin: 0 auto; background-color: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
+        .recipe-header { text-align: center; margin-bottom: 30px; }
+        .recipe-header h1 { color: #A52A2A; font-size: 2.5em; }
+        .recipe-image { width: 100%; height: 350px; object-fit: cover; border-radius: 8px; margin-bottom: 20px; }
+        .recipe-info { display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #eee; border-bottom: 1px solid #eee; margin-bottom: 20px;}
+        .bahan-list li { margin-bottom: 10px; }
+        .back-button { display: inline-block; background-color: #FF8C00; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+    <div class="container-detail">
+        <div id="recipe-content">
+            <p style="text-align: center;">Memuat resep...</p>
+        </div>
+        <a href="index.html" class="back-button">&laquo; Kembali ke Beranda</a>
+    </div>
+
+    <script>
+        // Data Kuliner diulang. Ini HARUS sama persis dengan yang ada di index.html.
+        const DATA_KULINER = [
+            { 
+                id: 1, 
+                nama: "Rendang Sapi", 
+                daerah: "Sumatera Barat", 
+                deskripsi: "Daging sapi yang dimasak perlahan dengan santan dan rempah khas Minangkabau.",
+                bahan: ["1 kg Daging Sapi", "1 L Santan kental", "500 ml Santan encer", "5 lembar Daun Jeruk", "1 batang Serai", "Bumbu halus (Bawang, Cabai, Jahe, Kunyit, Lengkuas)"], 
+                rating: 4.9, 
+                gambar: "beef-rendang-013.webp" 
+            },
+            { 
+                id: 2, 
+                nama: "Sate Lilit", 
+                daerah: "Bali", 
+                deskripsi: "Daging cincang yang dililitkan pada batang serai, dibakar dengan bumbu base genep yang kaya.",
+                bahan: ["500 gr Daging Ikan Cincang", "Kelapa Parut", "Bumbu Base Genep", "Batang Serai"], 
+                rating: 4.7, 
+                gambar: "Sate_lilit (1) - Copy.jpg"
+            },
+            { 
+                id: 3, 
+                nama: "Coto Makassar", 
+                daerah: "Sulawesi Selatan", 
+                deskripsi: "Sup daging khas Makassar dengan kuah kental berbumbu kacang dan rempah yang disajikan dengan ketupat.",
+                bahan: ["Daging Sapi", "Jeroan", "Kacang Tanah sangrai", "Bumbu Coto", "Berasal dari 40 macam rempah-rempah (patang pulo)"], 
+                rating: 4.6, 
+                gambar: "coto.jpeg"
+            },
+            { 
+                id: 4, 
+                nama: "Gudeg Yogyakarta", 
+                daerah: "Yogyakarta", 
+                deskripsi: "Nangka muda yang dimasak dengan santan dan gula merah hingga manis dan berwarna coklat kemerahan.",
+                bahan: ["Nangka Muda", "Santan", "Gula Merah", "Daun Jati", "Telur Bebek/Ayam"], 
+                rating: 4.5, 
+                gambar: "gudeg.jpg"
+            },
+            { 
+                id: 5, 
+                nama: "Pempek Kapal Selam", 
+                daerah: "Sumatera Selatan", 
+                deskripsi: "Adonan ikan tenggiri dan sagu yang dibentuk berisi telur, disajikan dengan kuah cuka pedas manis.",
+                bahan: ["Ikan Tenggiri Giling", "Tepung Sagu", "Telur Ayam", "Bumbu Cuko"], 
+                rating: 4.8, 
+                gambar: "pempek.jpg"
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const selectedId = localStorage.getItem('selectedResepId');
+            const contentDiv = document.getElementById('recipe-content');
+
+            if (!selectedId) {
+                contentDiv.innerHTML = '<p style="color: red; text-align: center;">Kesalahan: ID resep tidak ditemukan. Silakan kembali ke halaman utama.</p>';
+                return;
+            }
+
+            // Mencari resep berdasarkan ID yang disimpan (konversi ke integer)
+            const resep = DATA_KULINER.find(r => r.id === parseInt(selectedId));
+
+            if (resep) {
+                // Membuat list bahan-bahan
+                const bahanList = resep.bahan.map(bahan => `<li>${bahan}</li>`).join('');
+
+                contentDiv.innerHTML = `
+                    <div class="recipe-header">
+                        <h1>${resep.nama}</h1>
+                        <p><strong>Asal Daerah:</strong> ${resep.daerah}</p>
+                    </div>
+                    <img src="${resep.gambar}" alt="Gambar ${resep.nama}" class="recipe-image" onerror="this.src='placeholder.jpg'">
+                    <div class="recipe-info">
+                        <span>⭐ Rating: ${resep.rating}/5.0</span>
+                        <span>#Kuliner${resep.daerah.replace(/\s/g, '')}</span>
+                    </div>
+                    
+                    <h2>Deskripsi Singkat:</h2>
+                    <p>${resep.deskripsi}</p>
+                    
+                    <h2>Bahan-Bahan Utama:</h2>
+                    <ul class="bahan-list">
+                        ${bahanList}
+                    </ul>
+
+                    <h2>Instruksi (Contoh):</h2>
+                    <p>
+                        Langkah-langkah detail memasak **${resep.nama}** dapat ditemukan di bawah ini (Ini adalah **placeholder**):
+                        <ol>
+                            <li>Siapkan semua bahan yang sudah dicuci bersih dan dihaluskan bumbunya.</li>
+                            <li>Tumis bumbu halus hingga harum.</li>
+                            <li>Masukkan bahan utama (daging/ikan/nangka muda) dan aduk rata.</li>
+                            <li>Tuangkan santan dan masak hingga matang dan bumbu meresap sempurna.</li>
+                            <li>Sajikan dengan nasi hangat dan lauk pendamping.</li>
+                        </ol>
+                    </p>
+                    
+                `;
+            } else {
+                contentDiv.innerHTML = '<p style="color: red; text-align: center;">Resep tidak ditemukan dalam database.</p>';
+            }
+        });
+    </script>
+
+</body>
+</html>

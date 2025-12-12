@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jelajah Kuliner Nusantara - Panduan Rendang Sapi</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta name="description" content="Langkah-langkah terperinci untuk membuat Rendang Sapi autentik khas Minangkabau langsung dari halaman utama.">
+
+    <style>
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            background-color: #f8f8f8; 
+            color: #333; 
+        }
+        .header { 
+            background-color: #A52A2A; 
+            color: white; 
+            padding: 15px 5%; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        .logo a { 
+            font-size: 1.8em; 
+            font-weight: 700; 
+            color: white; 
+            text-decoration: none; 
+        }
+        .nav-menu a { 
+            color: white; 
+            text-decoration: none; 
+            margin-left: 20px; 
+            font-weight: 500; 
+            transition: color 0.3s; 
+        }
+        .nav-menu a:hover { 
+            color: #FFD700; 
+        }
+
+        /* Container Utama */
+        .container-resep { 
+            max-width: 900px; 
+            margin: 40px auto; 
+            padding: 30px; 
+            background-color: white; 
+            border-radius: 10px; 
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+        }
+        
+        /* Judul dan Gambar */
+        .resep-title {
+            text-align: center;
+            color: #A52A2A;
+            font-size: 3em;
+            margin-bottom: 5px;
+        }
+        .resep-subtitle {
+            text-align: center;
+            color: #FF8C00;
+            margin-bottom: 30px;
+            font-weight: 600;
+            font-size: 1.2em;
+        }
+        .resep-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Gaya Bahan dan Instruksi */
+        h2 {
+            color: #A52A2A;
+            border-bottom: 2px solid #FF8C00;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #333;
+            margin-top: 25px;
+        }
+
+        .bahan-list {
+            list-style: none;
+            padding-left: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+        .bahan-list li {
+            background: #fff3e0;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 5px solid #FF8C00;
+        }
+        
+        .instruksi-list {
+            counter-reset: step-counter;
+            list-style: none;
+            padding-left: 0;
+        }
+        .instruksi-list li {
+            counter-increment: step-counter;
+            margin-bottom: 20px;
+            padding: 15px 15px 15px 50px; /* Padding ditingkatkan untuk nomor langkah */
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            line-height: 1.6;
+            background-color: #fcfcfc;
+            position: relative;
+        }
+        .instruksi-list li::before {
+            content: counter(step-counter);
+            background-color: #A52A2A;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 700;
+            position: absolute;
+            left: 10px;
+            top: 15px;
+        }
+        
+        .instruksi-list li strong {
+            color: #A52A2A;
+        }
+        
+        /* Tombol */
+        .cta-button {
+            background-color: #008000; /* Hijau untuk Video */
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+            display: inline-block; 
+            margin-top: 20px;
+        }
+        .cta-button:hover {
+            background-color: #006400;
+        }
+        .footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+        .footer a {
+            color: #FF8C00;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo">
+            <a href="index.html">🍚 KULINER NUSANTARA</a>
+        </div>
+        <nav class="nav-menu">
+            <a href="jelajah.html">Jelajah Daerah</a>
+            <a href="resep.html">Resep</a>
+            <a href="blog.html">Cerita Kuliner</a>
+            <a href="kontak.html">Kontak</a>
+        </nav>
+    </header>
+
+    <main class="container-resep">
+        <h1 class="resep-title">Rendang Sapi</h1>
+        <p class="resep-subtitle">Panduan Langkah Demi Langkah Khas Minangkabau</p>
+        
+        <img src="beef-rendang-013.webp" alt="Rendang Sapi Autentik" class="resep-image">
+
+        <p style="text-align: center; font-style: italic; color: #555;">
+            Rendang adalah mahakarya kuliner yang membutuhkan kesabaran. Daging sapi dimasak perlahan dalam santan dan bumbu kaya rempah hingga mengering sempurna. Proses memasak lambat adalah kunci keautentikan.
+        </p>
+
+        <section id="bahan-rendang">
+            <h2>🥘 Bahan-Bahan</h2>
+            
+            <h3>Bahan Utama</h3>
+            <ul class="bahan-list">
+                <li>1 kg Daging Sapi (potongan rendang)</li>
+                <li>1 L Santan kental murni</li>
+                <li>500 ml Santan encer</li>
+            </ul>
+
+            <h3>Bumbu Halus</h3>
+            <ul class="bahan-list">
+                <li>12 siung Bawang Merah</li>
+                <li>8 siung Bawang Putih</li>
+                <li>150 gr Cabai Merah keriting</li>
+                <li>2 cm Jahe</li>
+                <li>3 cm Kunyit bakar</li>
+                <li>5 cm Lengkuas muda</li>
+            </ul>
+
+            <h3>Bumbu Pelengkap (Cemplung)</h3>
+            <ul class="bahan-list">
+                <li>3 batang Serai (memarkan)</li>
+                <li>5 lembar Daun Jeruk</li>
+                <li>3 lembar Daun Salam</li>
+                <li>1 lembar Daun Kunyit (simpulkan)</li>
+                <li>1 butir Asam Kandis</li>
+                <li>Garam dan Gula secukupnya</li>
+            </ul>
+        </section>
+
+        <section id="langkah-pembuatan">
+            <h2>⚙️ Langkah Pembuatan</h2>
+            <ol class="instruksi-list">
+                <li>
+                    <strong>Persiapan Bumbu:</strong>  Haluskan semua bahan bumbu halus hingga benar-benar lembut. Kualitas kehalusan bumbu sangat memengaruhi tekstur akhir rendang.
+                </li>
+                <li>
+                    <strong>Memasak Santan Awal (Gulai):</strong> Tuang santan encer ke dalam wajan besar. Masukkan bumbu halus dan semua bumbu pelengkap (serai, daun jeruk, dll.). Masak sambil diaduk perlahan hingga mendidih dan wangi.
+                </li>
+                <li>
+                    <strong>Memasukkan Daging:</strong> Masukkan potongan daging sapi. Besarkan api sedikit dan biarkan kuah menyusut hingga bumbu meresap ke daging.
+                </li>
+                <li>
+                    <strong>Penambahan Santan Kental:</strong> Setelah kuah menyusut dan berminyak, kecilkan api. Tambahkan santan kental, garam, dan gula.
+                </li>
+                <li>
+                    <strong>Tahap Kalio:</strong> Lanjutkan memasak dengan api kecil/sedang sambil sesekali diaduk. Kuah akan berubah menjadi kental dan berminyak (disebut Kalio). Daging sudah mulai empuk.
+                </li>
+                <li>
+                    <strong>Tahap Rendang Kering:</strong> Lanjutkan memasak dengan **api paling kecil**. Aduk lebih sering agar bagian bawah tidak gosong. Proses ini memakan waktu paling lama (4–8 jam total). Daging akan semakin empuk dan bumbu akan mengering menjadi *dedak* (serpihan bumbu).
+                </li>
+                <li>
+                    <strong>Selesai:</strong> Angkat rendang ketika bumbu sudah mengering sempurna, warnanya cokelat pekat, dan minyak rendang terlihat jernih. Sajikan.
+                </li>
+            </ol>
+        </section>
+        
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="https://youtu.be/contoh-link-rendang" target="_blank" class="cta-button">📺 Tonton Video Tutorial Lengkap</a>
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 Jelajah Kuliner Nusantara. Resep Asli Minang.</p>
+        <p><a href="#">Kebijakan Privasi</a> | <a href="#">Tentang Kami</a></p>
+    </footer>
+
+    <script>
+        // Data Rendang (Minimalis) untuk keperluan integrasi jika ada halaman resep-detail
+        const RENDANG_DATA = { 
+            id: 1, 
+            nama: "Rendang Sapi", 
+            link_eksternal: "https://youtu.be/contoh-link-rendang" 
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Jika suatu saat Anda ingin menggunakan ID ini untuk fitur tertentu:
+            console.log(`Halaman fokus Rendang ID: ${RENDANG_DATA.id}`);
+        });
+    </script>
+
+</body>
+</html>

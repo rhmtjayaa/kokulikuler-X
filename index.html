@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jelajah Kuliner Nusantara - Temukan Rasa Indonesia</title>
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/SJPdeE4lhmpEaqBXw="
+        crossorigin=""/>
+    
+    <link rel="stylesheet" href="styles.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <meta name="description" content="Jelajahi resep autentik dan cerita kuliner dari berbagai daerah di Indonesia. Dari Rendang hingga Papeda.">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/SJPdeE4lhmpEaqBXw="
+    crossorigin=""/>
+    
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20n636/WzAS7WgDGLk6T4I1zH5X7+F1y4w7pS0s1Cj4="
+    crossorigin=""></script>
+    
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            color: #333;
+        }
+
+        .header {
+            background-color: #A52A2A; 
+            color: white;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo a {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-menu a:hover {
+            color: #FFD700; 
+        }
+
+        .hero {
+            background: url('indo.jpeg') no-repeat center center/cover; 
+            height: 50vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+
+        .cta-button {
+            background-color: #FF8C00; 
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            background-color: #E67E22;
+        }
+
+        .container {
+            padding: 40px 5%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #A52A2A;
+        }
+
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 15px;
+        }
+
+        .card-content h3 {
+            margin-top: 0;
+            color: #A52A2A;
+        }
+
+        /* Gaya Khusus untuk Link Resep */
+        .resep-link {
+            color: #FF8C00;
+            text-decoration: none;
+            font-weight: 600;
+            display: block;
+            margin-top: 10px;
+        }
+
+        .footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+
+        /* Gaya Pencarian */
+        #search-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        #search-input {
+            padding: 12px;
+            width: 60%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+        
+        #search-button {
+            padding: 12px 20px;
+            margin-left: 10px;
+        }
+
+        /* Gaya Eksplorasi Daerah */
+        #explore-region {
+            margin-top: 60px;
+        }
+        
+        #explore-region p {
+            text-align: center;
+        }
+
+        #explore-region .cta-button {
+            background-color: #008000;
+        }
+
+        /* Gaya Footer Links */
+        .footer a {
+            color: #FF8C00;
+            text-decoration: none;
+        }
+        
+        /* Gaya Peta */
+        #mapid {
+            height: 350px; 
+            margin: 20px 0; 
+            border-radius: 10px; 
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* Pastikan peta memiliki tinggi agar terlihat */
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo">
+            <a href="index.html">🍚 KULINER NUSANTARA</a>
+        </div>
+        <nav class="nav-menu">
+            <a href="jelajah.html">Jelajah Daerah</a>
+            <a href="resep.html">Resep</a>
+            <a href="blog.html">Cerita Kuliner</a>
+            <a href="kontak.html">Kontak</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Jelajahi Rasa Autentik Indonesia</h1>
+        <p>Ribuan resep dan cerita dari Sabang sampai Merauke menanti untuk dicoba.</p>
+        <a href="jelajah.html" class="cta-button">Mulai Jelajah Kuliner</a>
+    </section>
+
+    <main class="container">
+        
+        <section id="search-section">
+            <input type="text" id="search-input" placeholder="Cari nama makanan, daerah, atau bahan...">
+            <button class="cta-button" id="search-button">Cari</button>
+        </section>
+
+        <section id="featured-culinary">
+            <h2 class="section-title">✨ Kuliner Populer Minggu Ini</h2>
+            <div class="featured-grid" id="search-results-grid">
+                
+                <article class="card">
+    <img src="beef-rendang-013.webp" alt="Rendang Sapi">
+    <div class="card-content">
+        <h3>Rendang Sapi</h3>
+        <p>Daging sapi yang dimasak perlahan dengan santan dan rempah khas Minangkabau. Kekuatan rasa yang mendunia.</p>
+        
+        <a href="resep-rendang.html" class="resep-link" data-id="1">Lihat Resep &raquo;</a> 
+        
+    </div>
+</article>
+
+                <article class="card">
+                    <img src="Sate_lilit (1) - Copy.jpg" alt="Sate Lilit Bali">
+                    <div class="card-content">
+                        <h3>Sate Lilit Bali</h3>
+                        <p>Daging cincang (ikan/ayam) yang dililitkan pada batang serai, dibakar dengan bumbu base genep yang kaya.</p>
+                        <a href="resep-detail.html" class="resep-link" data-id="2">Lihat Resep &raquo;</a>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <img src="coto.jpeg" alt="Coto Makassar">
+                    <div class="card-content">
+                        <h3>Coto Makassar</h3>
+                        <p>Sup daging khas Makassar dengan kuah kental berbumbu kacang dan rempah yang disajikan dengan ketupat.</p>
+                        <a href="resep-detail.html" class="resep-link" data-id="3">Lihat Resep &raquo;</a>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+        
+        <section id="explore-region">
+            <h2 class="section-title">🗺️ Jelajah Berdasarkan Asal Daerah</h2>
+            <p>Klik marker pada peta interaktif di bawah untuk melihat asal kuliner.</p>
+            
+            
+            <div id="mapid">
+                </div>
+            
+            <p>
+                <a href="jelajah.html" class="cta-button">Lihat Semua Daerah</a>
+            </p>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 Jelajah Kuliner Nusantara. Hak Cipta Dilindungi.</p>
+        <p><a href="#">Kebijakan Privasi</a> | <a href="#">Tentang Kami</a></p>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20n636/WzAS7WgDGLk6T4I1zH5X7+F1y4w7pS0s1Cj4="
+        crossorigin=""></script>
+
+    <script>
+        // -----------------------------------------------------------
+        // 1. DATA DUMMY KULINER (Database Simulasi)
+        // -----------------------------------------------------------
+        const DATA_KULINER = [
+            { 
+                id: 1, 
+                nama: "Rendang Sapi", 
+                daerah: "Sumatera Barat", 
+                deskripsi: "Daging sapi yang dimasak perlahan dengan santan dan rempah khas Minangkabau. Kekuatan rasa yang mendunia.",
+                bahan: ["1 kg Daging Sapi", "1 L Santan kental", "500 ml Santan encer", "5 lembar Daun Jeruk", "1 batang Serai"], 
+                rating: 4.9, 
+                gambar: "beef-rendang-013.webp",
+                lat: -0.94, 
+                lng: 100.35 // Padang
+               
+            },
+            { 
+                id: 2, 
+                nama: "Sate Lilit", 
+                daerah: "Bali", 
+                deskripsi: "Daging cincang (ikan/ayam) yang dililitkan pada batang serai, dibakar dengan bumbu base genep yang kaya.",
+                bahan: ["500 gr Daging Ikan Cincang", "Kelapa Parut", "Bumbu Base Genep", "Batang Serai"], 
+                rating: 4.7, 
+                gambar: "Sate_lilit (1) - Copy.jpg",
+                lat: -8.65, 
+                lng: 115.21 // Denpasar
+            },
+            { 
+                id: 3, 
+                nama: "Coto Makassar", 
+                daerah: "Sulawesi Selatan", 
+                deskripsi: "Sup daging khas Makassar dengan kuah kental berbumbu kacang dan rempah yang disajikan dengan ketupat.",
+                bahan: ["Daging Sapi", "Jeroan", "Kacang Tanah sangrai", "Bumbu Coto"], 
+                rating: 4.6, 
+                gambar: "coto.jpeg",
+                lat: -5.15, 
+                lng: 119.43 // Makassar
+            },
+            { 
+                id: 4, 
+                nama: "Gudeg Yogyakarta", 
+                daerah: "Yogyakarta", 
+                deskripsi: "Nangka muda yang dimasak dengan santan dan gula merah hingga manis dan berwarna coklat kemerahan.",
+                bahan: ["Nangka Muda", "Santan", "Gula Merah", "Daun Jati"], 
+                rating: 4.5, 
+                gambar: "gudeg.jpg",
+                lat: -7.79, 
+                lng: 110.36 // Yogyakarta
+            },
+            { 
+                id: 5, 
+                nama: "Pempek Kapal Selam", 
+                daerah: "Sumatera Selatan", 
+                deskripsi: "Adonan ikan tenggiri dan sagu yang dibentuk berisi telur, disajikan dengan kuah cuka pedas manis.",
+                bahan: ["Ikan Tenggiri Giling", "Tepung Sagu", "Telur Ayam", "Bumbu Cuko"], 
+                rating: 4.8, 
+                gambar: "pempek.jpg",
+                lat: -2.97, 
+                lng: 104.77 // Palembang
+            }
+        ];
+
+
+        // -----------------------------------------------------------
+        // 2. FUNGSI PENCARIAN & RENDER
+        // -----------------------------------------------------------
+
+        function cariKuliner(keyword) {
+            const lowerKeyword = keyword.toLowerCase().trim();
+            if (lowerKeyword === "") {
+                return DATA_KULINER.slice(0, 3);
+            }
+
+            return DATA_KULINER.filter(makanan => {
+                const isMatch = makanan.nama.toLowerCase().includes(lowerKeyword) || 
+                                makanan.daerah.toLowerCase().includes(lowerKeyword) ||
+                                makanan.deskripsi.toLowerCase().includes(lowerKeyword) ||
+                                makanan.bahan.some(bahan => bahan.toLowerCase().includes(lowerKeyword));
+                return isMatch;
+            });
+        }
+
+        function renderResults(results, isSearch = false) {
+            const container = document.getElementById('featured-culinary');
+            const resultsGrid = document.getElementById('search-results-grid');
+            const keyword = document.getElementById('search-input').value.trim();
+            
+            if (container) {
+                 if (isSearch && keyword !== "") {
+                    container.querySelector('.section-title').textContent = `🍜 Hasil Pencarian (${results.length} ditemukan)`;
+                 } else {
+                    container.querySelector('.section-title').textContent = '✨ Kuliner Populer Minggu Ini';
+                 }
+            }
+            
+            resultsGrid.innerHTML = '';
+
+            if (results.length === 0) {
+                resultsGrid.innerHTML = `<p style="text-align: center; grid-column: 1 / -1; padding: 30px; font-size: 1.2em;">
+                    Maaf, kuliner dengan kata kunci "${keyword}" tidak ditemukan. Coba kata kunci lain!</p>`;
+                setupResepLinks(); 
+                return;
+            }
+            
+            results.forEach(makanan => {
+                const cardHTML = `
+                    <article class="card">
+                        <img src="${makanan.gambar}" alt="${makanan.nama}" onerror="this.src='placeholder.jpg'">
+                        <div class="card-content">
+                            <h3>${makanan.nama}</h3>
+                            <p>${makanan.deskripsi.substring(0, 70)}...<br>Asal: ${makanan.daerah} | Rating: ${makanan.rating} ⭐</p>
+                            <a href="resep-detail.html" class="resep-link" data-id="${makanan.id}">Lihat Resep &raquo;</a>
+                        </div>
+                    </article>
+                `;
+                resultsGrid.innerHTML += cardHTML;
+            });
+            
+            setupResepLinks(); 
+        }
+
+
+        // -----------------------------------------------------------
+        // 3. FUNGSI TRANSFER DATA RESEP
+        // -----------------------------------------------------------
+        
+        function setupResepLinks() {
+            document.querySelectorAll('.resep-link').forEach(link => { 
+                link.removeEventListener('click', handleResepClick); 
+                link.addEventListener('click', handleResepClick);
+            });
+        }
+
+        function handleResepClick(e) {
+            e.preventDefault(); 
+            const resepId = e.currentTarget.getAttribute('data-id');
+            localStorage.setItem('selectedResepId', resepId);
+            window.location.href = 'resep-detail.html';
+        }
+
+        // -----------------------------------------------------------
+        // 4. INISIALISASI PETA LEAFLET (PETA NUSANTARA)
+        // -----------------------------------------------------------
+
+        function initializeMap() {
+            // Pusat Kepulauan Indonesia
+            const indonesiaCenter = [-2.5, 118.0]; 
+            const initialZoom = 5;
+
+            // Inisialisasi Peta
+            const mymap = L.map('mapid').setView(indonesiaCenter, initialZoom);
+            
+            // Tambahkan Layer Peta (OpenStreetMap)
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                maxZoom: 18,
+            }).addTo(mymap);
+
+            // Tambahkan Marker untuk setiap data kuliner
+            DATA_KULINER.forEach(makanan => {
+                L.marker([makanan.lat, makanan.lng]).addTo(mymap)
+                    .bindPopup(`<b>${makanan.nama}</b><br>${makanan.daerah}<br><a href="resep-detail.html" onclick="localStorage.setItem('selectedResepId', ${makanan.id})">Lihat Resep &raquo;</a>`);
+            });
+        }
+
+
+        // -----------------------------------------------------------
+        // 5. INITIALIZATION (On Load)
+        // -----------------------------------------------------------
+
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            const searchInput = document.getElementById('search-input');
+            const searchButton = document.getElementById('search-button');
+
+            const handleSearch = () => {
+                const keyword = searchInput.value;
+                const hasil = cariKuliner(keyword);
+                renderResults(hasil, true); 
+                // Scroll ke hasil pencarian
+                document.getElementById('featured-culinary').scrollIntoView({ behavior: 'smooth' });
+            };
+
+            // Setup Event Listener untuk tombol dan enter key
+            if (searchButton && searchInput) {
+                searchButton.addEventListener('click', handleSearch);
+
+                searchInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        handleSearch();
+                    }
+                });
+            }
+            
+            // 1. Render data awal (3 Kuliner Populer)
+            const initialResults = DATA_KULINER.slice(0, 3);
+            renderResults(initialResults);
+            
+            // 2. Inisialisasi Peta
+            initializeMap(); 
+        });
+    </script>
+
+</body>
+</html>
